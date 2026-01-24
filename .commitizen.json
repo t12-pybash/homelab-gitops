@@ -1,0 +1,41 @@
+{
+  "commitizen": {
+    "name": "cz_conventional_commits",
+    "version": "1.0.0",
+    "tag_format": "$version",
+    "bump_pattern": "^(feat|fix|refactor|perf|BREAKING CHANGE)",
+    "bump_map": {
+      "BREAKING CHANGE": "major",
+      "feat": "minor",
+      "fix": "patch",
+      "refactor": "patch",
+      "perf": "patch"
+    }
+  },
+  "commit_parser": [
+    {
+      "regex": "^feat",
+      "group": "Features"
+    },
+    {
+      "regex": "^fix",
+      "group": "Bug Fixes"
+    },
+    {
+      "regex": "^refactor",
+      "group": "Refactoring"
+    },
+    {
+      "regex": "^perf",
+      "group": "Performance"
+    },
+    {
+      "regex": "^docs",
+      "group": "Documentation"
+    },
+    {
+      "regex": "^chore",
+      "group": "Chores"
+    }
+  ]
+}

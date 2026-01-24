@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sidero-dashboard
+  labels:
+    app.kubernetes.io/name: sidero-dashboard
+    app.kubernetes.io/component: observability

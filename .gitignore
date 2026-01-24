@@ -1,0 +1,61 @@
+# SOPS encrypted files should be committed, but NOT decrypted versions
+*.dec.yaml
+*.decrypted.yaml
+decrypted/
+
+# Local SOPS configuration
+.sops.yaml.local
+
+# Kubeconfig files (CRITICAL - NEVER COMMIT)
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+
+# Secrets not encrypted with SOPS (CRITICAL)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+/tmp/
+*.tmp
+*.bak
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Build artifacts
+dist/
+build/
+*.o
+
+# Cluster outputs
+outputs/
+*.output.yaml
+
+# Session files
+.claude-session*
+*.session
+
+# Private variables
+values.local.yaml
+secrets/
+
+# Terraform outputs (should not be here, but if they leak...)
+terraform.tfstate*
+*.tfvars
+
+# Node modules (if using kustomize plugins)
+node_modules/
+package-lock.json
+yarn.lock

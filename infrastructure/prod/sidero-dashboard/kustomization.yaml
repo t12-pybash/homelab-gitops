@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: sidero-dashboard
+
+resources:
+  - namespace.yaml
+  - rbac.yaml
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: homelab-infrastructure
+      app.kubernetes.io/managed-by: flux

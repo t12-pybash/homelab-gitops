@@ -1,0 +1,101 @@
+# Pre-commit hooks for GitOps repository
+# Install: pip install pre-commit
+# Setup: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Detect secrets and private keys
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        stages: [commit]
+
+  # Scan for AWS credentials, API keys, tokens
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+        name: Gitleaks - Detect secrets
+        description: Detect secrets in git history
+        entry: gitleaks protect --verbose --staged
+        language: system
+        stages: [commit]
+
+  # General checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+        name: Check for large files
+      - id: check-case-conflict
+        name: Check for case conflicts
+      - id: check-json
+        name: Check JSON files
+      - id: check-yaml
+        name: Check YAML files
+        args: ['--unsafe']
+      - id: end-of-file-fixer
+        name: Fix end of file
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+      - id: detect-private-key
+        name: Detect private keys
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+
+  # Kubernetes YAML validation
+  - repo: https://github.com/instrumenta/kubeval
+    rev: 0.6.0
+    hooks:
+      - id: kubeval
+        name: Kubeval - Validate Kubernetes YAML
+        files: |
+          (?x)^(
+            .*\.yaml|
+            .*\.yml
+          )
+        args: [--ignore-missing-schemas, --strict]
+
+  # Trivy vulnerability scanner
+  - repo: https://github.com/aquasecurity/trivy-action
+    rev: master
+    hooks:
+      - id: trivy-config
+        name: Trivy - Kubernetes config scan
+        entry: trivy config
+        language: system
+        types: [yaml]
+        stages: [commit]
+      - id: trivy-fs
+        name: Trivy - Filesystem scan for CVEs
+        entry: trivy fs --severity CRITICAL,HIGH --skip-dirs .git
+        language: system
+        stages: [commit]
+
+  # YAML linting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.33.0
+    hooks:
+      - id: yamllint
+        name: YAML lint
+        args: [--config-data, '{rules: {line-length: {max: 120}}}']
+
+# Exclude sensitive files
+exclude: |
+  (?x)^(
+    .*\.dec\.yaml|
+    .*\.decrypted\.yaml|
+    .*kubeconfig|
+    .*talosconfig|
+    .*\.tfstate|
+    .*\.env|
+    \.sops\.yaml\.local|
+    \.secrets\.baseline|
+    node_modules/
+  )
+
+default_stages: [commit, push]
+fail_fast: false
