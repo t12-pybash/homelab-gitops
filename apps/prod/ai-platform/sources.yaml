@@ -1,5 +1,5 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: homelab-gitops
@@ -11,4 +11,3 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-    namespace: flux-system
