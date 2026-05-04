@@ -11,3 +11,4 @@ spec:
     branch: main
   secretRef:
     name: flux-system
+    namespace: flux-system
