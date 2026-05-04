@@ -4,7 +4,6 @@ namespace: ai-platform
 resources:
   - namespace.yaml
   - sources.yaml
-  - litellm-secret.sops.yaml
   - litellm-helmrelease.yaml
   - open-webui-helmrelease.yaml
   - qdrant-helmrelease.yaml
