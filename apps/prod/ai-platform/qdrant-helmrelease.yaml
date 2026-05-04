@@ -39,16 +39,14 @@ spec:
         cpu: 2000m
         memory: 2Gi
     livenessProbe:
-      httpGet:
-        path: /readiness
+      tcpSocket:
         port: 6333
       initialDelaySeconds: 60
       periodSeconds: 10
       timeoutSeconds: 3
       failureThreshold: 3
     readinessProbe:
-      httpGet:
-        path: /readiness
+      tcpSocket:
         port: 6333
       initialDelaySeconds: 45
       periodSeconds: 10
