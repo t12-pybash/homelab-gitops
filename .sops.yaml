@@ -1,5 +1,5 @@
 creation_rules:
-  - path_regex: .*\.sops\.[^/]*$
-    encrypted_regex: ^(data|stringData)$
+  - path_regex: \..*
     key_groups:
-      - age: age1hd3e8af00v68rkjv87fqk8k8q98rd6zc4tujvtenuc2fx329my3s8dktug
+      - age:
+          - age1hd3e8af00v68rkjv87fqk8k8q98rd6zc4tujvtenuc2fx329my3s8dktug
