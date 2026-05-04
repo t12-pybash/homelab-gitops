@@ -1,0 +1,97 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: monitoring
+      interval: 10m
+  install:
+    crds: Create
+    timeout: 20m
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    timeout: 20m
+    remediation:
+      retries: 3
+  values:
+    prometheus:
+      prometheusSpec:
+        retention: 15d
+        additionalScrapeConfigs:
+          - job_name: 'vps-n8n'
+            static_configs:
+              - targets: ['100.99.215.53:9100']
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: truenas-iscsi
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 15Gi
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+    grafana:
+      enabled: true
+      service:
+        type: NodePort
+        nodePort: 30300
+      persistence:
+        enabled: true
+        storageClassName: truenas-iscsi
+        size: 2Gi
+      datasources:
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+            - name: Prometheus
+              type: prometheus
+              url: http://kube-prometheus-stack-prometheus:9090
+              access: proxy
+              isDefault: true
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              updateIntervalSeconds: 10
+              allowUiUpdates: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+    alertmanager:
+      enabled: true
+      config:
+        global:
+          resolve_timeout: 5m
+        route:
+          group_by: ['alertname', 'cluster', 'service']
+          group_wait: 10s
+          group_interval: 10s
+          repeat_interval: 12h
+          receiver: 'null'
+        receivers:
+          - name: 'null'
+  valuesFrom:
+    - kind: Secret
+      name: kube-prometheus-stack-secrets
+      valuesKey: grafana-admin-password
+      targetPath: grafana.adminPassword

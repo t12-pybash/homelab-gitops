@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - namespace.yaml
+  - sources.yaml
+  - kube-prometheus-stack.sops.yaml
+  - kube-prometheus-stack-helmrelease.yaml
+  - loki-helmrelease.yaml
