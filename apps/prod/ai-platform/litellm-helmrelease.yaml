@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: litellm
+  namespace: ai-platform
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./helm/litellm
+      sourceRef:
+        kind: GitRepository
+        name: homelab-gitops
+        namespace: ai-platform
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: ghcr.io/berriai/litellm
+      tag: main-latest
+    service:
+      type: NodePort
+      nodePort: 30800
+      port: 4000
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+    env:
+      LITELLM_LOG: DEBUG
+    config:
+      model_list:
+        - model_name: mistral
+          litellm_params:
+            model: ollama/mistral
+            api_base: http://10.0.0.113:11434
+        - model_name: llama2
+          litellm_params:
+            model: ollama/llama2
+            api_base: http://10.0.0.113:11434
+      router_settings:
+        enable_pre_call_checks: true
+        enable_cooldowns: true
+  valuesFrom:
+    - kind: Secret
+      name: litellm-secrets
+      valuesKey: master-key
+      targetPath: env.LITELLM_MASTER_KEY

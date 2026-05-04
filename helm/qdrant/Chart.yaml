@@ -1,0 +1,14 @@
+apiVersion: v2
+name: qdrant
+description: Qdrant vector database for embeddings and RAG
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - vector-database
+  - embeddings
+  - rag
+  - qdrant
+maintainers:
+  - name: AI Platform Team
+    email: contact@example.com

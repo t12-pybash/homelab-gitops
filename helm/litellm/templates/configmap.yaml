@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: litellm
+data:
+  config.yaml: |
+    model_list:
+{{ toYaml .Values.config.models | indent 6 }}
+
+    router_settings:
+{{ toYaml .Values.config.router_settings | indent 6 }}

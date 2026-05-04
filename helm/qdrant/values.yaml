@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: qdrant/qdrant
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 6333
+  targetPort: 6333
+
+# Using local storage on wk1 for testing
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClassName: "local-storage"
+
+qdrant:
+  api_key: ""
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

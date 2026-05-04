@@ -1,0 +1,14 @@
+apiVersion: v2
+name: litellm
+description: LiteLLM proxy - OpenAI-compatible gateway for routing LLM requests
+type: application
+version: 0.1.0
+appVersion: "main"
+keywords:
+  - llm
+  - proxy
+  - openai-compatible
+  - gateway
+maintainers:
+  - name: Homelab AI Platform
+    email: admin@example.com

@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/open-webui/open-webui
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 3000
+  targetPort: 8080
+  nodePort: 30080
+
+ingress:
+  enabled: false
+
+# Connection to Ollama inference server
+env:
+  - name: OLLAMA_BASE_URL
+    value: "http://10.0.0.113:11434"
+  - name: OLLAMA_API_BASE_URL
+    value: "http://10.0.0.113:11434/api"
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

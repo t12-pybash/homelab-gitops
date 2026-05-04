@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/berriai/litellm
+  tag: main-latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 4000
+  targetPort: 4000
+  nodePort: 30800
+  # Internal service for pod-to-pod communication
+  internalPort: 4000
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+env:
+  - name: LITELLM_MASTER_KEY
+    value: "sk-1234567890abcdefghijk"  # Override with real key in production
+  - name: LITELLM_LOG
+    value: "DEBUG"
+
+# LiteLLM configuration
+config:
+  # Model list - routes to Ollama on local machine
+  models:
+    - model_name: mistral
+      litellm_params:
+        model: ollama/mistral
+        api_base: http://10.0.0.113:11434
+    - model_name: llama2
+      litellm_params:
+        model: ollama/llama2
+        api_base: http://10.0.0.113:11434
+    - model_name: llama-2
+      litellm_params:
+        model: ollama/llama2
+        api_base: http://10.0.0.113:11434
+
+  # Router settings
+  router_settings:
+    enable_pre_call_checks: true
+    enable_cooldowns: true

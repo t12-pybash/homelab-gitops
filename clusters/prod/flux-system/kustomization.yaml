@@ -4,3 +4,5 @@ namespace: flux-system
 resources:
   - gotk-components.yaml
   - gotk-sync.yaml
+  - monitoring.yaml
+  - apps.yaml

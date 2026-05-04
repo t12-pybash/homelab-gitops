@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qdrant
+  namespace: ai-platform
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: ./helm/qdrant
+      sourceRef:
+        kind: GitRepository
+        name: homelab-gitops
+        namespace: ai-platform
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: qdrant/qdrant
+      tag: latest
+    service:
+      type: ClusterIP
+      port: 6333
+    persistence:
+      enabled: true
+      storageClassName: truenas-iscsi
+      size: 10Gi
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+    qdrant:
+      api_key: ""
