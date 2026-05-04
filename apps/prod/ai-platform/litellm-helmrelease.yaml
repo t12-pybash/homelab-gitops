@@ -52,7 +52,10 @@ spec:
       timeoutSeconds: 3
       failureThreshold: 2
     env:
-      LITELLM_LOG: DEBUG
+      - name: LITELLM_LOG
+        value: DEBUG
+      - name: LITELLM_CONFIG_PATH
+        value: /app/config/config.yaml
     config:
       model_list:
         - model_name: mistral
