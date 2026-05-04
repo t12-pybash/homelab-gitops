@@ -22,6 +22,15 @@ spec:
       - name: litellm
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+          - python
+          - -m
+          - litellm.proxy.server
+        args:
+          - --config
+          - /app/config/config.yaml
+          - --port
+          - "4000"
         ports:
         - name: http
           containerPort: {{ .Values.service.targetPort }}
