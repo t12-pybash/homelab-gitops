@@ -64,6 +64,11 @@ spec:
               url: http://kube-prometheus-stack-prometheus:9090
               access: proxy
               isDefault: true
+            - name: Alertmanager
+              type: alertmanager
+              url: http://kube-prometheus-stack-alertmanager:9093
+              access: proxy
+              isDefault: false
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
