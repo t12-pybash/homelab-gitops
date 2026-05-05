@@ -30,7 +30,7 @@ env:
 # LiteLLM configuration
 config:
   # Model list - routes to Ollama on local machine
-  models:
+  model_list:
     - model_name: mistral
       litellm_params:
         model: ollama/mistral

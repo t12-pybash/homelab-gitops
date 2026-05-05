@@ -8,7 +8,7 @@ metadata:
 data:
   config.yaml: |
     model_list:
-{{ toYaml .Values.config.models | indent 6 }}
+{{ toYaml .Values.config.model_list | indent 6 }}
 
     router_settings:
 {{ toYaml .Values.config.router_settings | indent 6 }}
