@@ -10,11 +10,10 @@ service:
   port: 6333
   targetPort: 6333
 
-# Using local storage on wk1 for testing
 persistence:
   enabled: true
   size: 10Gi
-  storageClassName: "local-storage"
+  storageClassName: "truenas-iscsi"
 
 qdrant:
   api_key: ""
@@ -26,6 +25,22 @@ resources:
   limits:
     cpu: 2000m
     memory: 2Gi
+
+livenessProbe:
+  tcpSocket:
+    port: 6333
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+readinessProbe:
+  tcpSocket:
+    port: 6333
+  initialDelaySeconds: 45
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 2
 
 nodeSelector: {}
 
