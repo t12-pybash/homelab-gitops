@@ -22,9 +22,6 @@ spec:
       - name: litellm
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command:
-          - litellm
-          - proxy
         args:
           - --config
           - /app/config/config.yaml
