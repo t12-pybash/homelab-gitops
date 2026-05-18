@@ -49,8 +49,7 @@ spec:
     grafana:
       enabled: true
       service:
-        type: NodePort
-        nodePort: 30300
+        type: LoadBalancer
       persistence:
         enabled: true
         storageClassName: truenas-iscsi
