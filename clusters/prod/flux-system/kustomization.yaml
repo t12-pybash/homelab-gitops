@@ -6,3 +6,4 @@ resources:
   - gotk-sync.yaml
   - monitoring.yaml
   - apps.yaml
+  - infrastructure.yaml

@@ -1,0 +1,38 @@
+---
+# LoadBalancer for DNS — Cilium L2 assigns a stable LAN IP
+# Note the assigned IP after deploy: kubectl get svc -n dns technitium-dns
+# Set that IP as the DNS server in pfSense DHCP (Services > DHCP Server > DNS)
+apiVersion: v1
+kind: Service
+metadata:
+  name: technitium-dns
+  namespace: dns
+spec:
+  type: LoadBalancer
+  selector:
+    app: technitium
+  ports:
+    - name: dns-tcp
+      port: 53
+      targetPort: 53
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+---
+# ClusterIP for web UI — access via kubectl port-forward or ingress later
+apiVersion: v1
+kind: Service
+metadata:
+  name: technitium-ui
+  namespace: dns
+spec:
+  type: ClusterIP
+  selector:
+    app: technitium
+  ports:
+    - name: web-ui
+      port: 5380
+      targetPort: 5380
+      protocol: TCP
