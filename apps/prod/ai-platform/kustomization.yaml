@@ -7,3 +7,4 @@ resources:
   - litellm-helmrelease.yaml
   - open-webui-helmrelease.yaml
   - qdrant-helmrelease.yaml
+  - ingress.yaml

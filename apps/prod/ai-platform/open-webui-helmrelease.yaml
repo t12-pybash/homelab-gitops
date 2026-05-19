@@ -23,8 +23,7 @@ spec:
       repository: ghcr.io/open-webui/open-webui
       tag: latest
     service:
-      type: NodePort
-      nodePort: 30080
+      type: ClusterIP
       port: 3000
       targetPort: 8080
     resources:
