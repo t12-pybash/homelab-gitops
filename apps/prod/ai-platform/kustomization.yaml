@@ -8,3 +8,4 @@ resources:
   - open-webui-helmrelease.yaml
   - qdrant-helmrelease.yaml
   - ingress.yaml
+  - dashy.yaml
