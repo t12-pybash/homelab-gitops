@@ -41,6 +41,10 @@ spec:
               - targets: ['100.116.70.66:9100']
                 labels:
                   instance: midir
+          - job_name: 'pushgateway'
+            honor_labels: true
+            static_configs:
+              - targets: ['pushgateway.monitoring.svc.cluster.local:9091']
         storageSpec:
           volumeClaimTemplate:
             spec:
