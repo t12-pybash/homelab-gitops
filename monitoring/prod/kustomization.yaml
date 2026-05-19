@@ -7,4 +7,5 @@ resources:
   - kube-prometheus-stack-helmrelease.yaml
   - loki-helmrelease.yaml
   - grafana-ingress.yaml
+  - loki-ingress.yaml
   - pushgateway/
