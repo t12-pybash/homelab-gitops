@@ -91,9 +91,12 @@ spec:
           group_wait: 10s
           group_interval: 10s
           repeat_interval: 12h
-          receiver: 'null'
+          receiver: 'ntfy'
         receivers:
-          - name: 'null'
+          - name: 'ntfy'
+            webhook_configs:
+              - url: 'http://ntfy.monitoring.svc.cluster.local/homelab-alerts'
+                send_resolved: true
   valuesFrom:
     - kind: Secret
       name: kube-prometheus-stack-secrets

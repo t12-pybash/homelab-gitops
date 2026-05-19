@@ -9,3 +9,4 @@ resources:
   - grafana-ingress.yaml
   - loki-ingress.yaml
   - pushgateway/
+  - ntfy/
