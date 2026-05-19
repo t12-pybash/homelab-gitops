@@ -16,6 +16,8 @@ kind: Ingress
 metadata:
   name: ntfy
   namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   tls:
