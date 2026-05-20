@@ -5,3 +5,4 @@ resources:
   - technitium/
   - metallb/
   - nginx-ingress/
+  - velero/

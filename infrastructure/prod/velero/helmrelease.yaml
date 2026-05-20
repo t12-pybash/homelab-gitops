@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: velero
+      sourceRef:
+        kind: HelmRepository
+        name: vmware-tanzu
+        namespace: velero
+      interval: 10m
+  install:
+    crds: Create
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    timeout: 10m
+    remediation:
+      retries: 3
+  values:
+    credentials:
+      useSecret: true
+      existingSecret: velero-credentials
+    configuration:
+      backupStorageLocation:
+        - name: default
+          provider: aws
+          bucket: offsite-data-t12io
+          config:
+            region: eu-central-003
+            s3ForcePathStyle: "true"
+            s3Url: https://s3.eu-central-003.backblazeb2.com
+      volumeSnapshotLocation:
+        - name: default
+          provider: aws
+          config:
+            region: eu-central-003
+    defaultVolumesToFsBackup: true
+    deployNodeAgent: true
+    initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.10.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
