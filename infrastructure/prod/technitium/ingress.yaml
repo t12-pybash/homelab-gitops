@@ -1,0 +1,35 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: technitium-tls
+  namespace: dns
+spec:
+  secretName: technitium-tls
+  issuerRef:
+    name: homelab-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - technitium.home.t12.io
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: technitium
+  namespace: dns
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - technitium.home.t12.io
+      secretName: technitium-tls
+  rules:
+    - host: technitium.home.t12.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: technitium-ui
+                port:
+                  number: 5380
