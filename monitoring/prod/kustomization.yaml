@@ -8,5 +8,6 @@ resources:
   - loki-helmrelease.yaml
   - grafana-ingress.yaml
   - loki-ingress.yaml
+  - prometheus-ingress.yaml
   - pushgateway/
   - ntfy/
