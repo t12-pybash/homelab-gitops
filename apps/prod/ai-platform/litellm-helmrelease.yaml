@@ -71,3 +71,6 @@ spec:
       router_settings:
         enable_pre_call_checks: true
         enable_cooldowns: true
+      general_settings:
+        disable_spend_logs: true
+        disable_master_key_hash: true
