@@ -50,14 +50,9 @@ spec:
       failureThreshold: 2
     env:
       - name: LITELLM_LOG
-        value: DEBUG
+        value: INFO
       - name: LITELLM_CONFIG_PATH
         value: /app/config/config.yaml
-      - name: LITELLM_MASTER_KEY
-        valueFrom:
-          secretKeyRef:
-            name: litellm-secrets
-            key: master-key
     config:
       model_list:
         - model_name: mistral
@@ -71,6 +66,3 @@ spec:
       router_settings:
         enable_pre_call_checks: true
         enable_cooldowns: true
-      general_settings:
-        disable_spend_logs: true
-        disable_master_key_hash: true
