@@ -45,8 +45,27 @@ spec:
     falco:
       json_output: true
       log_level: info
-      plugins: []
-      load_plugins: []
+      load_plugins:
+        - container
+      plugins:
+        - name: container
+          library_path: libcontainer.so
+          init_config:
+            engines:
+              containerd:
+                enabled: false
+              docker:
+                enabled: false
+              cri:
+                enabled: false
+              podman:
+                enabled: false
+              bpm:
+                enabled: false
+              lxc:
+                enabled: false
+              libvirt_lxc:
+                enabled: false
 
     resources:
       requests:
