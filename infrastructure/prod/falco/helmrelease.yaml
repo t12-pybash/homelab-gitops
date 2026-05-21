@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: falco
+  namespace: falco
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: falco
+      version: ">=4.0.0 <5.0.0"
+      sourceRef:
+        kind: HelmRepository
+        name: falcosecurity
+        namespace: falco
+  install:
+    timeout: 10m
+    remediation:
+      retries: 3
+  upgrade:
+    timeout: 10m
+    remediation:
+      retries: 3
+  values:
+    driver:
+      kind: modern_ebpf
+
+    falcosidekick:
+      enabled: true
+      config:
+        ntfy:
+          hostport: "http://ntfy.monitoring.svc.cluster.local"
+          topic: "homelab-alerts"
+          minimumpriority: "warning"
+
+    falco:
+      rules_file:
+        - /etc/falco/falco_rules.yaml
+        - /etc/falco/falco_rules.local.yaml
+      json_output: true
+      log_level: info
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
