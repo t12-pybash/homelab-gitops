@@ -34,9 +34,6 @@ spec:
           minimumpriority: "warning"
 
     falco:
-      rules_file:
-        - /etc/falco/falco_rules.yaml
-        - /etc/falco/falco_rules.local.yaml
       json_output: true
       log_level: info
 
