@@ -23,7 +23,7 @@ spec:
       retries: 3
   values:
     driver:
-      kind: modern_ebpf
+      kind: ebpf
 
     falcosidekick:
       enabled: true
