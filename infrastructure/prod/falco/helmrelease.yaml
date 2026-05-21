@@ -45,6 +45,8 @@ spec:
     falco:
       json_output: true
       log_level: info
+      plugins: []
+      load_plugins: []
 
     resources:
       requests:
