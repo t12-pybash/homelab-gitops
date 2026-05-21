@@ -27,11 +27,13 @@ spec:
 
     falcosidekick:
       enabled: true
-      config:
-        ntfy:
-          hostport: "http://ntfy.monitoring.svc.cluster.local"
-          topic: "homelab-alerts"
-          minimumpriority: "warning"
+      extraEnv:
+        - name: NTFY_HOSTPORT
+          value: "http://ntfy.monitoring.svc.cluster.local"
+        - name: NTFY_TOPIC
+          value: "homelab-alerts"
+        - name: NTFY_MINIMUMPRIORITY
+          value: "warning"
 
     falcoctl:
       artifact:
