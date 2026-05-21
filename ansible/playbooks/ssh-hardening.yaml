@@ -1,0 +1,26 @@
+- name: Harden SSH on all cluster nodes
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Deploy SSH hardening config
+      copy:
+        dest: /etc/ssh/sshd_config.d/hardening.conf
+        content: |
+          PasswordAuthentication no
+          PermitRootLogin no
+          PubkeyAuthentication yes
+          X11Forwarding no
+          MaxAuthTries 3
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Validate sshd config
+      command: sshd -t
+      changed_when: false
+
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted

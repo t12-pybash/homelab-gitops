@@ -1,0 +1,30 @@
+all:
+  children:
+    control_plane:
+      hosts:
+        cp1:
+          ansible_host: 10.0.0.102
+        cp2:
+          ansible_host: 10.0.0.101
+        cp3:
+          ansible_host: 10.0.0.103
+      vars:
+        ansible_user: py
+        ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+
+    workers:
+      hosts:
+        wk1:
+          ansible_host: 10.0.0.106
+          ansible_user: py
+        wk2:
+          ansible_host: 10.0.0.104
+          ansible_user: ubuntu
+        wk3:
+          ansible_host: 10.0.0.105
+          ansible_user: ubuntu
+      vars:
+        ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
