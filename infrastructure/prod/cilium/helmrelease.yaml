@@ -28,7 +28,6 @@ spec:
         clusterPoolIPv4PodCIDRList: "10.244.0.0/16"
         clusterPoolIPv4MaskSize: 24
     kubeProxyReplacement: false
-    tunnelProtocol: vxlan
     l2announcements:
       enabled: true
     externalIPs:
