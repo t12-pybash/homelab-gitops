@@ -1,0 +1,23 @@
+ipam:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList: "10.244.0.0/16"
+    clusterPoolIPv4MaskSize: 24
+
+kubeProxyReplacement: false
+
+tunnelProtocol: vxlan
+
+l2announcements:
+  enabled: true
+
+externalIPs:
+  enabled: true
+
+devices: "enp+"
+
+k8sServiceHost: "10.0.0.102"
+k8sServicePort: 6443
+
+operator:
+  replicas: 1

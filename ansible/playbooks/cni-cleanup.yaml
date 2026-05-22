@@ -1,0 +1,23 @@
+---
+- name: Remove Flannel CNI config from all nodes
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Remove Flannel CNI config
+      file:
+        path: /etc/cni/net.d/10-flannel.conflist
+        state: absent
+
+    - name: Remove Flannel run state
+      file:
+        path: /run/flannel
+        state: absent
+
+    - name: Remove cni0 bridge interface
+      shell: ip link delete cni0 || true
+      changed_when: false
+
+    - name: Remove flannel.1 interface
+      shell: ip link delete flannel.1 || true
+      changed_when: false
