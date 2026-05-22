@@ -36,10 +36,10 @@ spec:
       artifact:
         install:
           refs:
-            - falco-rules:4
+            - falco-rules:5
         follow:
           refs:
-            - falco-rules:4
+            - falco-rules:5
 
     falco:
       json_output: true
