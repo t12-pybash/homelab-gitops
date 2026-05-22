@@ -28,19 +28,11 @@ spec:
       prometheusSpec:
         retention: 15d
         additionalScrapeConfigs:
-          - job_name: 'vps-n8n'
-            static_configs:
-              - targets: ['100.99.215.53:9100']
           - job_name: 'desktop'
             static_configs:
               - targets: ['10.0.0.113:9100']
                 labels:
                   instance: py-xps-8930
-          - job_name: 'midir'
-            static_configs:
-              - targets: ['100.116.70.66:9100']
-                labels:
-                  instance: midir
           - job_name: 'pushgateway'
             honor_labels: true
             static_configs:
