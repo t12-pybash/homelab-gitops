@@ -42,8 +42,15 @@ spec:
             - falco-rules:5
 
     falco:
-      json_output: true
+      json_output: false
       log_level: info
+      rules_inline: |
+        - rule: Debug catch-all exec
+          desc: Fire on any process execution anywhere
+          condition: spawned_process
+          output: "FALCO_DEBUG proc=%proc.name pid=%proc.pid user=%user.name container_id=%container.id"
+          priority: DEBUG
+          tags: [debug]
 
     resources:
       requests:
