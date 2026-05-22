@@ -93,6 +93,7 @@ spec:
           repeat_interval: 12h
           receiver: 'ntfy'
         receivers:
+          - name: 'null'
           - name: 'ntfy'
             webhook_configs:
               - url: 'http://ntfy.monitoring.svc.cluster.local/homelab-alerts'
