@@ -44,7 +44,9 @@ spec:
     falco:
       json_output: false
       log_level: info
-      rules_inline: |
+
+    customRules:
+      debug_catch_all.yaml: |-
         - rule: Debug catch-all exec
           desc: Fire on any process execution anywhere
           condition: spawned_process
