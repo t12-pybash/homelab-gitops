@@ -8,4 +8,3 @@ resources:
   - apps.yaml
   - infrastructure.yaml
   - infrastructure-config.yaml
-  - infrastructure-metallb.yaml
