@@ -1,0 +1,28 @@
+---
+- name: Expose etcd metrics on all interfaces
+  hosts: control_plane
+  serial: 1
+  become: true
+
+  tasks:
+    - name: Update etcd listen-metrics-urls to 0.0.0.0
+      replace:
+        path: /etc/kubernetes/manifests/etcd.yaml
+        regexp: '--listen-metrics-urls=http://127\.0\.0\.1:2381'
+        replace: '--listen-metrics-urls=http://0.0.0.0:2381'
+
+    - name: Wait for etcd to restart and become ready
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 2381
+        delay: 5
+        timeout: 60
+
+    - name: Verify etcd metrics endpoint responds
+      uri:
+        url: "http://{{ ansible_host }}:2381/metrics"
+        status_code: 200
+      register: result
+      retries: 5
+      delay: 5
+      until: result.status == 200
