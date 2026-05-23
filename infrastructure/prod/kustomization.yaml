@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - cert-manager/
   - technitium/
+  - pihole/
   - cilium/
   - nginx-ingress/
   - velero/
