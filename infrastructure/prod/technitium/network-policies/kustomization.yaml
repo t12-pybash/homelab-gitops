@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dns
+resources:
+  - default-deny-ingress.yaml
+  - allow-dns-port53.yaml
+  - allow-from-ingress-nginx.yaml
+  - allow-from-kube-system.yaml
