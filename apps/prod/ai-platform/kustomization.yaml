@@ -9,3 +9,4 @@ resources:
   - qdrant-helmrelease.yaml
   - ingress.yaml
   - dashy.yaml
+  - network-policies/
