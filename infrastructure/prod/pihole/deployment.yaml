@@ -28,6 +28,8 @@ spec:
                   key: WEBPASSWORD
             - name: PIHOLE_DNS_
               value: "1.1.1.1;1.0.0.1"
+            - name: VIRTUAL_HOST
+              value: "pihole.home.t12.io"
           ports:
             - containerPort: 53
               protocol: UDP
