@@ -1,11 +1,11 @@
-apiVersion: ENC[AES256_GCM,data:JiI=,iv:TQseBD+7yJiLvOHkKaAyZxhlFAXh1G2UY0M2YJpsvwQ=,tag:HdGCOtFc/jtzps8DIkMFLA==,type:str]
-kind: ENC[AES256_GCM,data:ZSthPRL5,iv:vZ6cowj6gyuDPZxSJqG9AQsGWEI0XXpYDMLIoF2pAoA=,tag:kNQcV42bu6ogXgbOGfG6HQ==,type:str]
+apiVersion: v1
+kind: Secret
 metadata:
-    name: ENC[AES256_GCM,data:O9bQya01HueCG3pllA==,iv:FzMm6bK11Lenip7pqiPXeCpoKBZGdwigBP+MC0+UMw4=,tag:djtC79D2SvKwaK6gU7S3AQ==,type:str]
-    namespace: ENC[AES256_GCM,data:VWOM,iv:fRnkhtDw37CyRCIK/s9TfBzqo4vCYYCGet5exvKYY5E=,tag:yMeP7+wcJkJM0jtL1NvmaQ==,type:str]
-type: ENC[AES256_GCM,data:q9+FXICj,iv:wy2ghHuF3yhEQU3Jbp+za/Me95+AOL7wZkHgaPxZozQ=,tag:Kdy6oGskEQZ4DeRH301rRg==,type:str]
+    name: pihole-secret
+    namespace: dns
+type: Opaque
 stringData:
-    WEBPASSWORD: ENC[AES256_GCM,data:IF9ZNIrx6qHJ,iv:GfVcEl6cY4udcjgdJcGDPKYty1+JaKyLGkHTNHWSUrk=,tag:7xvSSqT82dnh4Purlg4FIw==,type:str]
+    WEBPASSWORD: ENC[AES256_GCM,data:7GBw4q5sqdSM,iv:MljryEcRzIwXVU2MoUkNTpOWoEB//z/F5o2DoIkgsDQ=,tag:QSWYghOjNa0gNaHNLs1p7A==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,14 +15,14 @@ sops:
         - recipient: age1hd3e8af00v68rkjv87fqk8k8q98rd6zc4tujvtenuc2fx329my3s8dktug
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBrdUNtc0JmY1NOYitxa2Y4
-            SEd3ZkM1dC9LM2RWUWNXd1pWZE01TGo4UFEwCk1XY1lQRU9vMElpZ1RTaWtOUExS
-            dHZYS09BbkJOZTJublhZcGY1cGRjL1UKLS0tIDV6QS9mK09GMTVZQ0NtMGtjdEhT
-            RlBoMWdWTWprSWE0dEhKbE5JdlFsaHcKnIkoAkmk80//gRYq+cdPaT4dIqBBO8AX
-            NQkzoxzqXmilS0Nno3g3ulNcaAxlCkQPKOymnpc3i1tc+tVe5C72eg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAzdjRKVXZwaHFQSnUrVERx
+            cWY0VkY5S1RqVDVneFowYjFpc1NmTk43NkdRCjdmRk5pdXVuMkpFWHBHZzgrUFVs
+            SFJ6VjVUVkp5dDF5eEtyb3ZmemI0VlEKLS0tIFlta1hRQkNZdENPTEo4YzVzU1hE
+            eVU4ZUJTU1dzYWxaK1pLc3NLOHFTNlUKmigZlQAecn8oF6CXH7FvoPuQHMoBQofX
+            NbFUzMjRDr8izFUm65xpEvxleLHMSlU7fSjQSa8oaaK49hjPphWfxQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-05-23T18:34:35Z"
-    mac: ENC[AES256_GCM,data:g0xjRHhPwWuiMn5Peys5cqEPQraEHfFc1TWZkugI3xi1d7yXpuLCLZSmJzua4EXQL5ao7U1yUFySS4SfGaWKtYmV8+w7jQszfJ7iCD6m2hf2deWqXdzUCf/nwG1oFILhs5MOOSmHSdHzGjawIz5AbXC8bnV2QrMuY16K1Vr2wKA=,iv:Axc1mqfEKAgdCdzLhjHIKisCN6kvhS8MPW6AJrtkSnU=,tag:kRTAfvkowTZKXzuRjziQjg==,type:str]
+    lastmodified: "2026-05-23T19:31:01Z"
+    mac: ENC[AES256_GCM,data:opyQstfx4Xhf91leArQzZU6EHzBQvbZahqqkH2w9WR3o9G/g8anF4Kwin2rGOHT1oVIykr1E+ubjt/lAwJnDb0D2zygrPa0MV3uQU5mEt8at/m6bj/UYRBsKFVN/hsnxtJYTWbgj7/7va4Bw7ELJTcxlcnKNAz1TIIKu6VoE2s0=,iv:RMMBn/Yozs29qx+D2ITuqvmUQ6+TB62b5jC/nkHPBAk=,tag:qX054Co4QUX0z3Qln6H/Wg==,type:str]
     pgp: []
-    unencrypted_suffix: _unencrypted
+    encrypted_regex: ^(data|stringData)$
     version: 3.9.1
