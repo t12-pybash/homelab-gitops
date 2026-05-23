@@ -11,3 +11,4 @@ resources:
   - prometheus-ingress.yaml
   - pushgateway/
   - ntfy/
+  - network-policies/
