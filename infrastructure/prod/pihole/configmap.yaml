@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pihole-custom-dns
-  namespace: dns
-data:
-  home.t12.io.conf: |
-    server=/home.t12.io/10.0.0.200
