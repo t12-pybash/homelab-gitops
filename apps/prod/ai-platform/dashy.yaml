@@ -31,6 +31,9 @@ data:
           - title: Technitium DNS
             url: http://10.0.0.200:5380
             icon: si-amazondocumentdb
+          - title: Pi-hole
+            url: https://pihole.home.t12.io/admin
+            icon: si-pihole
 ---
 apiVersion: apps/v1
 kind: Deployment
