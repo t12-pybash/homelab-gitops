@@ -26,6 +26,9 @@ data:
           - title: LiteLLM
             url: https://litellm.home.t12.io
             icon: si-openai
+          - title: Qdrant
+            url: https://qdrant.home.t12.io/dashboard
+            icon: si-databricks
       - name: Infrastructure
         items:
           - title: Technitium DNS

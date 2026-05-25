@@ -69,3 +69,39 @@ spec:
                 name: litellm
                 port:
                   number: 4000
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: qdrant-tls
+  namespace: ai-platform
+spec:
+  secretName: qdrant-tls
+  issuerRef:
+    name: homelab-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - qdrant.home.t12.io
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qdrant
+  namespace: ai-platform
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - qdrant.home.t12.io
+      secretName: qdrant-tls
+  rules:
+    - host: qdrant.home.t12.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qdrant
+                port:
+                  number: 6333
