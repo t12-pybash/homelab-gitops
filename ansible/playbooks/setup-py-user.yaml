@@ -1,29 +1,30 @@
-- name: Create py user on worker nodes
-  hosts: workers
-  become: true
+  - name: Create py user on worker nodes
+    hosts: workers
+    become: true
 
-  vars:
-    py_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+qTeCq+AnE6mCD6/9kFe4wR0VAC1BfvkrYw8MnpQbS pybashinf@gmail.com"
+    vars:
+      py_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+qTeCq+AnE6mCD6/9kFe4wR0VAC1BfvkrYw8MnpQbS pybashinf@gmail.com"
 
-  tasks:
-    - name: Create py user
-      user:
-        name: py
-        shell: /bin/bash
-        groups: sudo
-        append: yes
-        create_home: yes
+    tasks:
+      - name: Create py user
+        user:
+          name: py
+          shell: /bin/bash
+          groups: sudo
+          append: yes
+          create_home: yes
 
-    - name: Add SSH authorized key
-      authorized_key:
-        user: py
-        key: "{{ py_ssh_pubkey }}"
-        state: present
+      - name: Add SSH authorized key
+        authorized_key:
+          user: py
+          key: "{{ py_ssh_pubkey }}"
+          state: present
 
-    - name: Allow py passwordless sudo
-      copy:
-        dest: /etc/sudoers.d/py
-        content: "py ALL=(ALL) NOPASSWD:ALL\n"
-        owner: root
-        group: root
-        mode: '0440'
+      - name: Allow py passwordless sudo
+        copy:
+          dest: /etc/sudoers.d/py
+          content: "py ALL=(ALL) NOPASSWD:ALL\n"
+          owner: root
+          group: root
+          mode: '0440'
+
