@@ -6,7 +6,7 @@ metadata:
   namespace: ai-platform
 spec:
   interval: 1m
-  url: ssh://git@gitlab.com/pybashinf-group/homelab-gitops.git
+  url: ssh://git@github.com/t12-pybash/homelab-gitops.git
   ref:
     branch: main
   secretRef:

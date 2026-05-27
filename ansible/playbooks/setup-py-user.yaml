@@ -3,7 +3,7 @@
     become: true
 
     vars:
-      py_ssh_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE+qTeCq+AnE6mCD6/9kFe4wR0VAC1BfvkrYw8MnpQbS pybashinf@gmail.com"
+      py_ssh_pubkey: "ssh-ed25519 <your-public-key> user@host"
 
     tasks:
       - name: Create py user
