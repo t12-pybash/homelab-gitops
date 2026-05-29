@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: obsidian-vault
+  name: vault-ingest-cache
   namespace: vault-ingest
 spec:
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteOnce
+  storageClassName: truenas-iscsi
   resources:
     requests:
-      storage: 1Gi
-  volumeName: obsidian-vault-nfs
-  storageClassName: ""
+      storage: 100Mi

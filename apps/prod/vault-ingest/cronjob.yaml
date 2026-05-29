@@ -13,6 +13,27 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          initContainers:
+            - name: sync-vault
+              image: alpine:3.19
+              command:
+                - sh
+                - -c
+                - |
+                  apk add --no-cache rsync openssh-client
+                  mkdir -p /root/.ssh
+                  cp /ssh/id_ed25519 /root/.ssh/id_ed25519
+                  cp /ssh/known_hosts /root/.ssh/known_hosts
+                  chmod 600 /root/.ssh/id_ed25519
+                  rsync -az --delete \
+                    -e "ssh -i /root/.ssh/id_ed25519 -o UserKnownHostsFile=/root/.ssh/known_hosts" \
+                    py@10.0.0.113:/home/py/Documents/obsidian-vault/ /vault/
+              volumeMounts:
+                - name: vault-data
+                  mountPath: /vault
+                - name: ssh-key
+                  mountPath: /ssh
+                  readOnly: true
           containers:
             - name: ingest
               image: ghcr.io/t12-pybash/sre-cli:latest
@@ -20,7 +41,7 @@ spec:
                 - name: SRE_CONFIG_FILE
                   value: /etc/sre/config.toml
               volumeMounts:
-                - name: vault
+                - name: vault-data
                   mountPath: /vault
                   readOnly: true
                 - name: sre-config
@@ -28,11 +49,15 @@ spec:
                 - name: ingest-cache
                   mountPath: /root/.config/sre
           volumes:
-            - name: vault
-              persistentVolumeClaim:
-                claimName: obsidian-vault
+            - name: vault-data
+              emptyDir: {}
+            - name: ssh-key
+              secret:
+                secretName: vault-ingest-ssh
+                defaultMode: 0400
             - name: sre-config
               configMap:
                 name: sre-config
             - name: ingest-cache
-              emptyDir: {}
+              persistentVolumeClaim:
+                claimName: vault-ingest-cache
