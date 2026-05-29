@@ -7,3 +7,4 @@ resources:
   - allow-from-ingress-nginx.yaml
   - allow-from-kube-system.yaml
   - allow-from-monitoring.yaml
+  - allow-from-vault-ingest.yaml
