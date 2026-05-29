@@ -15,12 +15,11 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             - name: sync-vault
-              image: alpine:3.19
+              image: ghcr.io/t12-pybash/sre-cli:latest
               command:
                 - sh
                 - -c
                 - |
-                  apk add --no-cache rsync openssh-client
                   mkdir -p /root/.ssh
                   cp /ssh/id_ed25519 /root/.ssh/id_ed25519
                   cp /ssh/known_hosts /root/.ssh/known_hosts
@@ -50,7 +49,8 @@ spec:
                   mountPath: /root/.config/sre
           volumes:
             - name: vault-data
-              emptyDir: {}
+              persistentVolumeClaim:
+                claimName: vault-data
             - name: ssh-key
               secret:
                 secretName: vault-ingest-ssh
