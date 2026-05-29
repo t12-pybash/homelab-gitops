@@ -1,0 +1,17 @@
+[Unit]
+Description=Vault watcher - publishes Obsidian vault changes to Redpanda
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=py
+Environment=SRE_CONFIG_FILE=/home/py/.config/sre/config.toml
+ExecStart=/home/py/.local/share/pipx/venvs/sre/bin/python -m sre.scripts.vault_watcher
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

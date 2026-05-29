@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-ingest-consumer
+  namespace: vault-ingest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-ingest-consumer
+  template:
+    metadata:
+      labels:
+        app: vault-ingest-consumer
+    spec:
+      containers:
+        - name: consumer
+          image: ghcr.io/t12-pybash/sre-cli:latest
+          imagePullPolicy: Always
+          command: ["python", "-m", "sre.scripts.consume_vault"]
+          env:
+            - name: SRE_CONFIG_FILE
+              value: /etc/sre/config.toml
+          volumeMounts:
+            - name: sre-config
+              mountPath: /etc/sre
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+      volumes:
+        - name: sre-config
+          configMap:
+            name: sre-config

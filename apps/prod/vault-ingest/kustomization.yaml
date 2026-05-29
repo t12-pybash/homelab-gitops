@@ -6,3 +6,4 @@ resources:
   - vault-data-pvc.yaml
   - configmap.yaml
   - cronjob.yaml
+  - consumer-deployment.yaml

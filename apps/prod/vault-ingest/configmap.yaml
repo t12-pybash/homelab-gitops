@@ -9,3 +9,4 @@ data:
     embed_ollama_url = "http://10.0.0.113:11434"
     qdrant_url = "http://qdrant.ai-platform.svc.cluster.local:6333"
     vault_path = "/vault"
+    redpanda_url = "redpanda.messaging.svc.cluster.local:9092"

@@ -25,6 +25,9 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      repository: docker.io/redpandadata/redpanda
+
     statefulset:
       replicas: 1
 
