@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net" modified="2026-05-29" version="21.0.0">
+  <diagram name="vault-ingest-pipeline" id="vault-ingest-pipeline">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Vault Ingest Pipeline — Event-Driven (Redpanda)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="20" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ── DESKTOP BOUNDARY ── -->
+        <mxCell id="desktop-bg" value="&lt;b&gt;Desktop · py-xps-8930 · 10.0.0.113&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;verticalAlign=top;arcSize=5;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="400" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- Obsidian Vault -->
+        <mxCell id="vault-dir" value="&lt;b&gt;Obsidian Vault&lt;/b&gt;&lt;br&gt;/home/py/Documents/obsidian-vault/&lt;br&gt;&lt;font color='#666666'&gt;~101 .md files&lt;/font&gt;" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="260" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- vault-watcher systemd -->
+        <mxCell id="watcher-svc" value="&lt;b&gt;vault-watcher.service&lt;/b&gt;&lt;br&gt;systemd · User=py&lt;br&gt;&lt;br&gt;watchdog monitors vault dir&lt;br&gt;on create/modify/delete:&lt;br&gt;→ read file content&lt;br&gt;→ publish JSON to Redpanda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- port-forward systemd -->
+        <mxCell id="portfwd-svc" value="&lt;b&gt;redpanda-portforward.service&lt;/b&gt;&lt;br&gt;systemd · User=py&lt;br&gt;&lt;br&gt;kubectl port-forward&lt;br&gt;svc/redpanda -n messaging&lt;br&gt;127.0.0.1:9092 → cluster:9092" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="460" width="260" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- /etc/hosts note -->
+        <mxCell id="hosts-note" value="/etc/hosts:&lt;br&gt;127.0.0.1  redpanda-0.redpanda.messaging.svc.cluster.local." style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="585" width="260" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- ── KUBERNETES CLUSTER BOUNDARY ── -->
+        <mxCell id="k8s-bg" value="&lt;b&gt;Kubernetes Cluster&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;verticalAlign=top;arcSize=5;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="510" y="80" width="1140" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- ── MESSAGING NAMESPACE ── -->
+        <mxCell id="messaging-bg" value="&lt;b&gt;messaging&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;verticalAlign=top;arcSize=5;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="120" width="280" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Redpanda broker -->
+        <mxCell id="redpanda" value="&lt;b&gt;Redpanda&lt;/b&gt; · redpanda-0&lt;br&gt;StatefulSet · 1 replica&lt;br&gt;&lt;br&gt;Kafka-compatible broker&lt;br&gt;port: 9092&lt;br&gt;&lt;br&gt;topic: vault-changes&lt;br&gt;partitions: 3&lt;br&gt;&lt;font color='#666666'&gt;image: redpandadata/redpanda&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;arcSize=10;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="555" y="160" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Redpanda PVC -->
+        <mxCell id="redpanda-pvc" value="PVC · 5Gi&lt;br&gt;truenas-iscsi" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="605" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── VAULT-INGEST NAMESPACE ── -->
+        <mxCell id="vi-bg" value="&lt;b&gt;vault-ingest&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;verticalAlign=top;arcSize=5;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="120" width="380" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Consumer Deployment -->
+        <mxCell id="consumer" value="&lt;b&gt;vault-ingest-consumer&lt;/b&gt;&lt;br&gt;Deployment · 1 replica&lt;br&gt;&lt;br&gt;image: ghcr.io/t12-pybash/sre-cli&lt;br&gt;cmd: consume_vault.py&lt;br&gt;&lt;br&gt;1. poll vault-changes topic&lt;br&gt;2. on modified: embed + upsert&lt;br&gt;3. on deleted: remove from Qdrant&lt;br&gt;4. commit offset" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;arcSize=10;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="860" y="155" width="340" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- CronJob (kept for fallback) -->
+        <mxCell id="cronjob" value="&lt;b&gt;vault-ingest CronJob&lt;/b&gt;&lt;br&gt;schedule: 0 3 * * *&lt;br&gt;&lt;font color='#666666'&gt;(fallback full-sync)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="370" width="340" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ── AI-PLATFORM NAMESPACE ── -->
+        <mxCell id="ai-bg" value="&lt;b&gt;ai-platform&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;verticalAlign=top;arcSize=5;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="120" width="360" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Qdrant -->
+        <mxCell id="qdrant" value="&lt;b&gt;Qdrant&lt;/b&gt;&lt;br&gt;qdrant.ai-platform.svc:6333&lt;br&gt;&lt;br&gt;collection: vault&lt;br&gt;vectors: nomic-embed-text&lt;br&gt;&lt;br&gt;NetworkPolicy:&lt;br&gt;allow-from-vault-ingest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;arcSize=10;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1285" y="155" width="300" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Ollama (external to cluster) -->
+        <mxCell id="ollama" value="&lt;b&gt;Ollama&lt;/b&gt;&lt;br&gt;10.0.0.113:11434&lt;br&gt;&lt;br&gt;model: nomic-embed-text&lt;br&gt;&lt;font color='#666666'&gt;(on desktop)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1285" y="370" width="300" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ── ARROWS ── -->
+
+        <!-- vault dir → watcher (watchdog monitors) -->
+        <mxCell id="e1" value="watchdog&lt;br&gt;monitors" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;strokeColor=#d6b656;" edge="1" source="vault-dir" target="watcher-svc" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- watcher → portfwd (connects via) -->
+        <mxCell id="e2" value="connects via" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;strokeColor=#b85450;" edge="1" source="watcher-svc" target="portfwd-svc" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- portfwd → redpanda (tunnel) -->
+        <mxCell id="e3" value="TCP tunnel&lt;br&gt;localhost:9092" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.7;entryDx=0;entryDy=0;fontSize=10;strokeColor=#b85450;strokeWidth=2;dashed=1;" edge="1" source="portfwd-svc" target="redpanda" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- watcher → redpanda (produce) -->
+        <mxCell id="e4" value="produce&lt;br&gt;{ path, action, content }" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;fontSize=10;strokeColor=#9673a6;strokeWidth=2;" edge="1" source="watcher-svc" target="redpanda" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- redpanda → consumer (consume) -->
+        <mxCell id="e5" value="consume&lt;br&gt;poll offset" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;strokeColor=#82b366;strokeWidth=2;" edge="1" source="redpanda" target="consumer" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- redpanda → pvc (persist) -->
+        <mxCell id="e6" value="persist logs" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;strokeColor=#9673a6;" edge="1" source="redpanda" target="redpanda-pvc" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- consumer → ollama (embed) -->
+        <mxCell id="e7" value="embed request" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;strokeColor=#d6b656;strokeWidth=2;" edge="1" source="consumer" target="ollama" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- consumer → qdrant (upsert) -->
+        <mxCell id="e8" value="upsert / delete vectors" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=10;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="consumer" target="qdrant" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ── FLOW LEGEND ── -->
+        <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="1610" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="&lt;b&gt;Event Flow&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="650" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-1" value="1.  File saved in Obsidian vault on desktop" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="675" width="320" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-2" value="2.  vault-watcher detects change via watchdog, reads content, publishes JSON message to vault-changes topic" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="695" width="700" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-3" value="3.  Message routed via kubectl port-forward (localhost:9092 → redpanda-0 in messaging namespace)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="715" width="700" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-4" value="4.  vault-ingest-consumer polls topic, calls Ollama for embeddings, upserts to Qdrant.  Offset committed → no re-processing on restart." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="780" y="675" width="840" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-5" value="5.  CronJob retained as fallback full-sync (3am daily) to catch any missed events." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="780" y="700" width="600" height="25" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
