@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vault-ingest
+  namespace: vault-ingest
+spec:
+  schedule: "0 3 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: ingest
+              image: ghcr.io/t12-pybash/sre-cli:latest
+              env:
+                - name: SRE_CONFIG_FILE
+                  value: /etc/sre/config.toml
+              volumeMounts:
+                - name: vault
+                  mountPath: /vault
+                  readOnly: true
+                - name: sre-config
+                  mountPath: /etc/sre
+                - name: ingest-cache
+                  mountPath: /root/.config/sre
+          volumes:
+            - name: vault
+              persistentVolumeClaim:
+                claimName: obsidian-vault
+            - name: sre-config
+              configMap:
+                name: sre-config
+            - name: ingest-cache
+              emptyDir: {}
