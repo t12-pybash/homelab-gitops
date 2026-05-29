@@ -70,7 +70,8 @@ spec:
     console:
       enabled: true
       image:
-        repository: docker.io/redpandadata/console
+        registry: docker.io
+        repository: redpandadata/console
       ingress:
         enabled: true
         className: nginx
