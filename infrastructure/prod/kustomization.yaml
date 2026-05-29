@@ -8,3 +8,4 @@ resources:
   - nginx-ingress/
   - velero/
   - falco/
+  - redpanda/
