@@ -16,6 +16,7 @@ spec:
           initContainers:
             - name: sync-vault
               image: ghcr.io/t12-pybash/sre-cli:latest
+              imagePullPolicy: Always
               command:
                 - sh
                 - -c
@@ -36,6 +37,7 @@ spec:
           containers:
             - name: ingest
               image: ghcr.io/t12-pybash/sre-cli:latest
+              imagePullPolicy: Always
               env:
                 - name: SRE_CONFIG_FILE
                   value: /etc/sre/config.toml
