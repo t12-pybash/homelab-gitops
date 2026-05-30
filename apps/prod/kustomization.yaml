@@ -4,3 +4,4 @@ resources:
   - ai-platform/
   - vaultwarden/
   - vault-ingest/
+  - nextcloud/
